@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build-macos:
+    name: Build (macOS)
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          brew install libsodium opus ffmpeg yt-dlp
+
+      - name: Build Flight Library
+        run: swift build -c release
+
+      - name: Build Validation Bot
+        run: cd FlightValidate && swift build -c release
+
+  build-linux:
+    name: Build (Linux)
+    runs-on: ubuntu-latest
+    container: swift:6.0-jammy
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          apt-get update
+          apt-get install -y libsodium-dev libopus-dev ffmpeg python3
+          
+      - name: Build Flight Library
+        run: swift build -c release
+        
+      - name: Build Validation Bot
+        run: cd FlightValidate && swift build -c release
