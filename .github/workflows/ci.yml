@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-      - dev
   pull_request:
     branches:
       - main
-      - dev
 
 jobs:
   build-macos:
@@ -19,20 +17,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: '6.3-development'
+
       - name: Install Dependencies
         run: |
-          brew install libsodium opus ffmpeg yt-dlp
+          brew install libsodium opus ffmpeg yt-dlp swiftformat
+
+      - name: Check Formatting
+        run: swiftformat --lint .
 
       - name: Build Flight Library
         run: swift build -c release
 
-      - name: Build Validation Bot
-        run: cd FlightValidate && swift build -c release
-
   build-linux:
     name: Build (Linux)
     runs-on: ubuntu-latest
-    container: swift:6.0-jammy
+    container: swift:6.3-jammy
     
     steps:
       - name: Checkout repository
@@ -45,6 +48,3 @@ jobs:
           
       - name: Build Flight Library
         run: swift build -c release
-        
-      - name: Build Validation Bot
-        run: cd FlightValidate && swift build -c release
