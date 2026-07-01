@@ -47,7 +47,7 @@ jobs:
       - name: Install Dependencies
         run: |
           apt-get update
-          apt-get install -y libsodium-dev libopus-dev ffmpeg python3
+          apt-get install -y libsodium-dev libopus-dev ffmpeg python3 libssl-dev
           
       - name: Build Flight Library
         run: swift build -c release
