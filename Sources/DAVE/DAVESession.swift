@@ -43,7 +43,7 @@ class DaveSession {
             &outputLength
         )
 
-        guard let data = data, outputLength > 0 else {
+        guard let data, outputLength > 0 else {
             return Data()
         }
         defer { daveFree(data) }
@@ -51,7 +51,7 @@ class DaveSession {
     }
 
     func getProtocolVersion() -> UInt16 {
-        return daveSessionGetProtocolVersion(sessionHandle)
+        daveSessionGetProtocolVersion(sessionHandle)
     }
 
     func processProposals(proposals: Data, knownUserIds: [String]) -> Data? {
@@ -105,7 +105,7 @@ class DaveSession {
             }
         }
 
-        if let result = result {
+        if let result {
             return Welcome(handle: result)
         } else {
             return nil
@@ -122,7 +122,7 @@ class DaveSession {
             )
         }
 
-        if let handle = handle {
+        if let handle {
             return Commit(handle: handle)
         } else {
             return nil

@@ -24,28 +24,28 @@ enum GatewayCloseCode: UInt16, Codable, CustomStringConvertible {
              .alreadyAuthenticated,
              .sessionTimeout,
              .voiceServerCrashed:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 
     var description: String {
         switch self {
-        case .normalClosure: return "Normal Closure (1000)"
-        case .abnormalClosure: return "Abnormal Closure (1006)"
-        case .unknownOpcode: return "Unknown Opcode (4001)"
-        case .failedToDecode: return "Failed to Decode (4002)"
-        case .notAuthenticated: return "Not Authenticated (4003)"
-        case .authenticationFailed: return "Authentication Failed (4004)"
-        case .alreadyAuthenticated: return "Already Authenticated (4005)"
-        case .sessionNoLongerValid: return "Session No Longer Valid (4006)"
-        case .sessionTimeout: return "Session Timeout (4009)"
-        case .serverNotFound: return "Server Not Found (4011)"
-        case .unknownProtocol: return "Unknown Protocol (4012)"
-        case .disconnected: return "Disconnected / Kicked (4014)"
-        case .voiceServerCrashed: return "Voice Server Crashed (4015)"
-        case .unknownEncryptionMode: return "Unknown Encryption Mode (4016)"
+        case .normalClosure: "Normal Closure (1000)"
+        case .abnormalClosure: "Abnormal Closure (1006)"
+        case .unknownOpcode: "Unknown Opcode (4001)"
+        case .failedToDecode: "Failed to Decode (4002)"
+        case .notAuthenticated: "Not Authenticated (4003)"
+        case .authenticationFailed: "Authentication Failed (4004)"
+        case .alreadyAuthenticated: "Already Authenticated (4005)"
+        case .sessionNoLongerValid: "Session No Longer Valid (4006)"
+        case .sessionTimeout: "Session Timeout (4009)"
+        case .serverNotFound: "Server Not Found (4011)"
+        case .unknownProtocol: "Unknown Protocol (4012)"
+        case .disconnected: "Disconnected / Kicked (4014)"
+        case .voiceServerCrashed: "Voice Server Crashed (4015)"
+        case .unknownEncryptionMode: "Unknown Encryption Mode (4016)"
         }
     }
 }
@@ -60,7 +60,7 @@ struct GatewayClose: CustomStringConvertible {
     }
 
     var closeCode: GatewayCloseCode? {
-        return GatewayCloseCode(rawValue: code)
+        GatewayCloseCode(rawValue: code)
     }
 
     var shouldResume: Bool {

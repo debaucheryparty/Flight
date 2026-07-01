@@ -40,7 +40,7 @@ enum RTPPacket {
         header: [UInt8],
         encryptedPayload: [UInt8]
     ) -> [UInt8] {
-        return header + encryptedPayload
+        header + encryptedPayload
     }
 
     static func parse(bytes: [UInt8]) -> ParsedRTP? {

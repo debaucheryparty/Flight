@@ -28,10 +28,8 @@ public final class OpusDecoder: @unchecked Sendable {
     public func decode(opusData: [UInt8], frameSize: Int = 960, isFEC: Bool = false) throws -> [Int16] {
         var pcmOut = [Int16](repeating: 0, count: frameSize * channels)
 
-        let decodedSamples: Int32
-
-        if opusData.isEmpty {
-            decodedSamples = opus_decode(
+        let decodedSamples: Int32 = if opusData.isEmpty {
+            opus_decode(
                 decoder,
                 nil,
                 0,
@@ -40,7 +38,7 @@ public final class OpusDecoder: @unchecked Sendable {
                 isFEC ? 1 : 0
             )
         } else {
-            decodedSamples = opus_decode(
+            opus_decode(
                 decoder,
                 opusData,
                 Int32(opusData.count),

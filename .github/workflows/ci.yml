@@ -40,10 +40,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Import Swift GPG Keys
+        run: wget -q -O - https://swift.org/keys/all-keys.asc | gpg --import -
+
       - name: Setup Swift
-        uses: swift-actions/setup-swift@v2
+        uses: swift-actions/setup-swift@v3
         with:
-          swift-version: '6.3.0'
+          swift-version: '6.3'
 
       - name: Install Dependencies
         run: |

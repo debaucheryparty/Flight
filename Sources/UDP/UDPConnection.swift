@@ -10,10 +10,10 @@ final class UDPConnection: @unchecked Sendable {
     private let remoteAddressLock = Protected<SocketAddress?>(nil)
 
     private struct DiscoveryState {
-        var continuation: CheckedContinuation<(ip: String, port: UInt16), Error>? = nil
-        var retryTask: Task<Void, Never>? = nil
-        var timeoutTask: Task<Void, Never>? = nil
-        var expectedSSRC: UInt32? = nil
+        var continuation: CheckedContinuation<(ip: String, port: UInt16), Error>?
+        var retryTask: Task<Void, Never>?
+        var timeoutTask: Task<Void, Never>?
+        var expectedSSRC: UInt32?
     }
 
     private let discoveryLock = Protected<DiscoveryState>(DiscoveryState())
@@ -36,7 +36,7 @@ final class UDPConnection: @unchecked Sendable {
             .channelOption(ChannelOptions.socketOption(.so_reuseaddr), value: 1)
             .channelInitializer { [weak self] channel in
                 channel.eventLoop.makeCompletedFuture {
-                    guard let self = self else { return }
+                    guard let self else { return }
                     let handler = UDPFrameHandler(logger: self.logger) { [weak self] bytes in
                         self?.handleIncomingMessage(bytes)
                     }

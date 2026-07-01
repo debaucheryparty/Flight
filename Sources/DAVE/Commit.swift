@@ -12,10 +12,10 @@ class Commit {
     }
 
     var isFailed: Bool {
-        return daveCommitResultIsFailed(handle)
+        daveCommitResultIsFailed(handle)
     }
 
     var isIgnored: Bool {
-        return daveCommitResultIsIgnored(handle)
+        daveCommitResultIsIgnored(handle)
     }
 }

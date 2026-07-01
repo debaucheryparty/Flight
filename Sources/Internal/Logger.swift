@@ -8,7 +8,7 @@ enum LogLevel: Int, Comparable {
     case error
 
     static func < (lhs: LogLevel, rhs: LogLevel) -> Bool {
-        return lhs.rawValue < rhs.rawValue
+        lhs.rawValue < rhs.rawValue
     }
 }
 
@@ -50,11 +50,11 @@ struct Logger {
 private extension LogLevel {
     var name: String {
         switch self {
-        case .trace: return "TRACE"
-        case .debug: return "DEBUG"
-        case .info: return "INFO"
-        case .warning: return "WARN"
-        case .error: return "ERROR"
+        case .trace: "TRACE"
+        case .debug: "DEBUG"
+        case .info: "INFO"
+        case .warning: "WARN"
+        case .error: "ERROR"
         }
     }
 }

@@ -6,7 +6,7 @@ func logSyncCallback(
     line: Int32,
     message: UnsafePointer<CChar>?
 ) {
-    guard let message = message, let file = file else { return }
+    guard let message, let file else { return }
     let logMessage = String(cString: message)
     let fileName = String(cString: file)
 

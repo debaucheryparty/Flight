@@ -25,8 +25,8 @@ public final class VoiceGateway: @unchecked Sendable {
     }
 
     private struct GatewayTasks {
-        var reconnect: Task<Void, Never>? = nil
-        var handshake: Task<Void, Never>? = nil
+        var reconnect: Task<Void, Never>?
+        var handshake: Task<Void, Never>?
     }
 
     private let tasksLock = Protected<GatewayTasks>(GatewayTasks())
@@ -197,22 +197,22 @@ public final class VoiceGateway: @unchecked Sendable {
 
             let capturedGen = connectionGeneration.read { $0 }
             let handshakeTask = Task { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
 
-                let isCurrentGen = self.connectionGeneration.read { $0 == capturedGen }
+                let isCurrentGen = connectionGeneration.read { $0 == capturedGen }
                 guard isCurrentGen else { return }
 
                 do {
-                    let resume = self.isResumePending.read { $0 }
+                    let resume = isResumePending.read { $0 }
                     if resume {
-                        self.stateMachine.transition(to: .identifying)
-                        try await self.sendResume()
+                        stateMachine.transition(to: .identifying)
+                        try await sendResume()
                     } else {
-                        self.stateMachine.transition(to: .identifying)
-                        try await self.sendIdentify()
+                        stateMachine.transition(to: .identifying)
+                        try await sendIdentify()
                     }
                 } catch {
-                    self.logger.error("Failed to transmit handshake payload: \(error)")
+                    logger.error("Failed to transmit handshake payload: \(error)")
                 }
             }
 
@@ -232,27 +232,27 @@ public final class VoiceGateway: @unchecked Sendable {
 
             let capturedGen = connectionGeneration.read { $0 }
             let handshakeTask = Task { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
 
-                let isCurrentGen = self.connectionGeneration.read { $0 == capturedGen }
+                let isCurrentGen = connectionGeneration.read { $0 == capturedGen }
                 guard isCurrentGen else { return }
 
                 do {
                     guard let selectedMode = EncryptionMode.selectMode(from: ready.modes) else {
                         throw VoiceError.handshakeFailed("No supported encryption mode found in server-provided list: \(ready.modes)")
                     }
-                    self.logger.info("Selected encryption mode: \(selectedMode.rawValue)")
+                    logger.info("Selected encryption mode: \(selectedMode.rawValue)")
 
-                    self.stateMachine.transition(to: .discovering)
+                    stateMachine.transition(to: .discovering)
 
-                    let udp = UDPConnection(logger: self.logger)
-                    self.udpConnectionLock.write { $0 = udp }
+                    let udp = UDPConnection(logger: logger)
+                    udpConnectionLock.write { $0 = udp }
 
                     try await udp.connect(host: ready.ip, port: ready.port)
 
                     let (externalIP, externalPort) = try await udp.discoverIP(ssrc: ready.ssrc, timeout: 2.0)
 
-                    self.stateMachine.transition(to: .negotiating)
+                    stateMachine.transition(to: .negotiating)
 
                     let selectPayload = SelectProtocolPayload(
                         protocolName: "udp",
@@ -261,15 +261,15 @@ public final class VoiceGateway: @unchecked Sendable {
                         mode: selectedMode.rawValue
                     )
 
-                    guard let conn = self.connectionLock.read({ $0 }) else {
+                    guard let conn = connectionLock.read({ $0 }) else {
                         throw VoiceError.webSocketClosed(1006, "Connection lost during protocol selection")
                     }
 
-                    self.logger.debug("Sending Select Protocol: \(externalIP):\(externalPort) mode: \(selectedMode.rawValue)")
+                    logger.debug("Sending Select Protocol: \(externalIP):\(externalPort) mode: \(selectedMode.rawValue)")
                     try await conn.send(op: .selectProtocol, data: selectPayload)
                 } catch {
-                    self.logger.error("UDP Handshake / Protocol Selection failed: \(error)")
-                    self.handleDisconnect(reason: .error(error))
+                    logger.error("UDP Handshake / Protocol Selection failed: \(error)")
+                    handleDisconnect(reason: .error(error))
                 }
             }
 
@@ -380,13 +380,13 @@ public final class VoiceGateway: @unchecked Sendable {
         let capturedGen = connectionGeneration.read { $0 }
 
         let transitionTask = Task { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
-            let isCurrentGen = self.connectionGeneration.read { $0 == capturedGen }
+            let isCurrentGen = connectionGeneration.read { $0 == capturedGen }
             guard isCurrentGen else { return }
 
             do {
-                if let daveSessionManager = self.daveSessionManagerLock.read({ $0 }) {
+                if let daveSessionManager = daveSessionManagerLock.read({ $0 }) {
                     await daveSessionManager.prepareTransition(
                         transitionId: UInt16(payload.transitionId),
                         protocolVersion: UInt16(payload.protocolVersion)
@@ -402,14 +402,14 @@ public final class VoiceGateway: @unchecked Sendable {
         let capturedGen = connectionGeneration.read { $0 }
 
         let executeTask = Task { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
-            let isCurrentGen = self.connectionGeneration.read { $0 == capturedGen }
+            let isCurrentGen = connectionGeneration.read { $0 == capturedGen }
             guard isCurrentGen else { return }
 
-            if let daveSessionManager = self.daveSessionManagerLock.read({ $0 }) {
+            if let daveSessionManager = daveSessionManagerLock.read({ $0 }) {
                 await daveSessionManager.executeTransition(transitionId: UInt16(payload.transitionId))
-                self.logger.info("DAVE: Transition \(payload.transitionId) executed.")
+                logger.info("DAVE: Transition \(payload.transitionId) executed.")
             }
         }
 
@@ -590,27 +590,27 @@ public final class VoiceGateway: @unchecked Sendable {
         let capturedGen = connectionGeneration.read { $0 }
 
         let reconnectTask = Task { [weak self] in
-            guard let self = self else { return }
-            let delay = self.reconnectManager.nextDelay()
+            guard let self else { return }
+            let delay = reconnectManager.nextDelay()
             do {
                 try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
             } catch {
                 return
             }
 
-            let isCurrentGen = self.connectionGeneration.read { $0 == capturedGen }
+            let isCurrentGen = connectionGeneration.read { $0 == capturedGen }
             guard isCurrentGen else {
-                self.logger.debug("Reconnect task aborted: connection generation has advanced")
+                logger.debug("Reconnect task aborted: connection generation has advanced")
                 return
             }
 
-            guard self.stateMachine.current == .reconnecting else { return }
+            guard stateMachine.current == .reconnecting else { return }
 
-            self.logger.info("Attempting reconnection to Voice Gateway...")
+            logger.info("Attempting reconnection to Voice Gateway...")
             do {
-                try await self.performConnect()
+                try await performConnect()
             } catch {
-                self.logger.error("Reconnection attempt failed")
+                logger.error("Reconnection attempt failed")
             }
         }
 

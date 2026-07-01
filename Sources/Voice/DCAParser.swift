@@ -22,13 +22,13 @@ public final class DCAParser: OpusSource, @unchecked Sendable {
         }
 
         let jsonSizeData = try fileHandle.read(upToCount: 4)
-        guard let jsonSizeData = jsonSizeData, jsonSizeData.count == 4 else {
+        guard let jsonSizeData, jsonSizeData.count == 4 else {
             throw DCAParserError.eof
         }
         let jsonSize = Int(jsonSizeData.withUnsafeBytes { $0.load(as: Int32.self).littleEndian })
 
         let jsonData = try fileHandle.read(upToCount: jsonSize)
-        guard let jsonData = jsonData, jsonData.count == jsonSize else {
+        guard let jsonData, jsonData.count == jsonSize else {
             throw DCAParserError.eof
         }
 
@@ -40,7 +40,7 @@ public final class DCAParser: OpusSource, @unchecked Sendable {
     }
 
     public func readOpusPacket() async -> [UInt8]? {
-        return readPacketSynchronously()
+        readPacketSynchronously()
     }
 
     private func readPacketSynchronously() -> [UInt8]? {

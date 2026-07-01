@@ -92,19 +92,19 @@ public final class FFmpegSource: AudioSource, @unchecked Sendable {
         let frameSize = 3840
 
         return await Task.detached { [weak self] () -> [Int16]? in
-            guard let self = self else { return nil }
+            guard let self else { return nil }
 
-            let isTerm = self.isTerminated.read { $0 }
+            let isTerm = isTerminated.read { $0 }
             if isTerm { return nil }
 
             do {
-                guard let data = try self.stdoutPipe.fileHandleForReading.read(upToCount: frameSize) else {
-                    self.stop()
+                guard let data = try stdoutPipe.fileHandleForReading.read(upToCount: frameSize) else {
+                    stop()
                     return nil
                 }
 
                 if data.isEmpty {
-                    self.stop()
+                    stop()
                     return nil
                 }
 
@@ -112,7 +112,7 @@ public final class FFmpegSource: AudioSource, @unchecked Sendable {
                 _ = pcm.withUnsafeMutableBytes { data.copyBytes(to: $0) }
                 return pcm
             } catch {
-                self.stop()
+                stop()
                 return nil
             }
         }.value
@@ -141,11 +141,10 @@ public final class FFmpegSource: AudioSource, @unchecked Sendable {
         whichProcess.waitUntilExit()
 
         if whichProcess.terminationStatus == 0 {
-            let data: Data
-            if #available(macOS 10.15, *) {
-                data = (try? pipe.fileHandleForReading.readToEnd()) ?? Data()
+            let data: Data = if #available(macOS 10.15, *) {
+                (try? pipe.fileHandleForReading.readToEnd()) ?? Data()
             } else {
-                data = pipe.fileHandleForReading.readDataToEndOfFile()
+                pipe.fileHandleForReading.readDataToEndOfFile()
             }
             let path = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             if !path.isEmpty {

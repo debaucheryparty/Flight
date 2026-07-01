@@ -11,7 +11,7 @@ final class HeartbeatManager: Sendable {
     private struct HeartbeatState {
         var sequence = 0
         var ackPending = false
-        var task: Task<Void, Never>? = nil
+        var task: Task<Void, Never>?
     }
 
     init(
@@ -30,7 +30,7 @@ final class HeartbeatManager: Sendable {
         stop()
 
         let task = Task { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
             let jitter = Double.random(in: 0.0 ... 1.0)
             let initialDelay = intervalMs * jitter

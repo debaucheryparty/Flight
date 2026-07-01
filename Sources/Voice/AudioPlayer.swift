@@ -152,34 +152,34 @@ public final class AudioPlayer: Sendable {
 
             // trigger a frame read exactly every 20ms to match discord voice timing
             let scheduler = FrameScheduler(tickMs: 20) { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
 
-                guard self.stateLock.read({ $0 }) == .playing else { return }
-                guard let activeTrack = self.currentTrackLock.read({ $0 }) else { return }
+                guard stateLock.read({ $0 }) == .playing else { return }
+                guard let activeTrack = currentTrackLock.read({ $0 }) else { return }
 
                 switch activeTrack.source {
                 case let .pcm(pcmSource):
                     if var pcmFrame = await pcmSource.readFrame() {
                         // multiply samples by volume but cap it to 16bit so it doesnt crackle
-                        self.applyVolume(&pcmFrame, scale: self.volumeLock.read { $0 })
+                        applyVolume(&pcmFrame, scale: volumeLock.read { $0 })
                         do {
-                            let opusData = try self.encoder.encode(pcm: pcmFrame, frameSize: 960)
-                            try await self.client.sendOpusFrame(opusData)
+                            let opusData = try encoder.encode(pcm: pcmFrame, frameSize: 960)
+                            try await client.sendOpusFrame(opusData)
                         } catch {
-                            self.emit(.error(error))
+                            emit(.error(error))
                         }
                     } else {
-                        await self.handleTrackFinished(activeTrack, reason: .finished)
+                        await handleTrackFinished(activeTrack, reason: .finished)
                     }
                 case let .opus(opusSource):
                     if let opusData = await opusSource.readOpusPacket() {
                         do {
-                            try await self.client.sendOpusFrame(opusData)
+                            try await client.sendOpusFrame(opusData)
                         } catch {
-                            self.emit(.error(error))
+                            emit(.error(error))
                         }
                     } else {
-                        await self.handleTrackFinished(activeTrack, reason: .finished)
+                        await handleTrackFinished(activeTrack, reason: .finished)
                     }
                 }
             }

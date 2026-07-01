@@ -23,7 +23,7 @@ final class FrameScheduler: Sendable {
             var nextSendTime = clock.now
 
             while !Task.isCancelled {
-                guard let self, self.running.read({ $0 }) else { break }
+                guard let self, running.read({ $0 }) else { break }
 
                 do {
                     try await tickCallback()
