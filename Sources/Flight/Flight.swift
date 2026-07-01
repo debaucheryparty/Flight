@@ -1,7 +1,7 @@
 import Foundation
 
 public enum Flight {
-    public static let version = "0.1.0"
+    public static let version = "1.0.0"
 
     public static var maxDaveProtocolVersion: UInt16 {
         DaveSessionManager.maxSupportedProtocolVersion()
