@@ -66,7 +66,7 @@ public final class AudioMixer: AudioSource, @unchecked Sendable {
         var finishedIds = [UUID]()
 
         for (id, frame) in results {
-            if let frame = frame {
+            if let frame {
                 for i in 0 ..< min(frame.count, 1920) {
                     mixedFrame[i] += Int32(frame[i])
                 }

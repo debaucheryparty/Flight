@@ -8,7 +8,7 @@ struct GatewaySession: Codable {
     let endpoint: String
 
     func with(endpoint: String, token: String) -> GatewaySession {
-        return GatewaySession(
+        GatewaySession(
             serverId: serverId,
             userId: userId,
             sessionId: sessionId,

@@ -18,35 +18,35 @@ public enum VoiceError: Error, CustomStringConvertible, LocalizedError, Equatabl
     public var description: String {
         switch self {
         case let .invalidEndpoint(endpoint):
-            return "Invalid voice endpoint: \(endpoint)"
+            "Invalid voice endpoint: \(endpoint)"
         case let .webSocketClosed(code, reason):
-            return "WebSocket closed with code \(code) reason: \(reason ?? "none")"
+            "WebSocket closed with code \(code) reason: \(reason ?? "none")"
         case let .handshakeFailed(reason):
-            return "Handshake failed: \(reason)"
+            "Handshake failed: \(reason)"
         case .connectionTimeout:
-            return "Connection timed out"
+            "Connection timed out"
         case .heartbeatTimeout:
-            return "Heartbeat acknowledged timeout (zombie connection)"
+            "Heartbeat acknowledged timeout (zombie connection)"
         case .sessionExpired:
-            return "Session expired"
+            "Session expired"
         case .authenticationFailed:
-            return "Authentication failed"
+            "Authentication failed"
         case .invalidPayload:
-            return "Received invalid payload from Discord"
+            "Received invalid payload from Discord"
         case .reconnectFailed:
-            return "Failed to reconnect after maximum attempts"
+            "Failed to reconnect after maximum attempts"
         case .missingCredentials:
-            return "Missing session credentials (sessionID, token, or endpoint)"
+            "Missing session credentials (sessionID, token, or endpoint)"
         case let .encryptionFailed(reason):
-            return "Encryption failed: \(reason)"
+            "Encryption failed: \(reason)"
         case let .opusError(code, reason):
-            return "Opus error \(code): \(reason)"
+            "Opus error \(code): \(reason)"
         case let .daveError(reason):
-            return "DAVE error: \(reason)"
+            "DAVE error: \(reason)"
         }
     }
 
     public var errorDescription: String? {
-        return description
+        description
     }
 }

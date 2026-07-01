@@ -40,7 +40,7 @@ public actor DaveSessionManager {
     }
 
     public nonisolated static func maxSupportedProtocolVersion() -> UInt16 {
-        return daveMaxSupportedProtocolVersion()
+        daveMaxSupportedProtocolVersion()
     }
 
     private var assignedSsrcs: Set<UInt32> = []
@@ -141,7 +141,7 @@ public actor DaveSessionManager {
 
     public func mlsProposals(proposals: Data) async {
         let welcome = session.processProposals(proposals: proposals, knownUserIds: knownUserIds)
-        if let welcome = welcome {
+        if let welcome {
             await delegate?.mlsCommitWelcome(welcome: welcome)
         }
     }
@@ -180,7 +180,7 @@ public actor DaveSessionManager {
     }
 
     private var knownUserIds: [String] {
-        return Array(decryptors.keys) + [selfUserId]
+        Array(decryptors.keys) + [selfUserId]
     }
 
     private func setupKeyRatchetForEncryptor(protocolVersion: UInt16) {

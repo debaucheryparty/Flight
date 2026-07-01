@@ -65,7 +65,7 @@ final class VoiceTransporter: @unchecked Sendable {
 
         // dave e2ee comes first if enabled
         var mediaPayload = opusPayload
-        if let daveSessionManager = daveSessionManager {
+        if let daveSessionManager {
             do {
                 let encryptedData = try await daveSessionManager.encrypt(
                     ssrc: ssrc,

@@ -25,7 +25,7 @@ enum RTPNonce {
     }
 
     static func serializeCounter(_ counter: UInt32) -> [UInt8] {
-        return [
+        [
             UInt8((counter >> 24) & 0xFF),
             UInt8((counter >> 16) & 0xFF),
             UInt8((counter >> 8) & 0xFF),

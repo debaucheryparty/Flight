@@ -128,7 +128,7 @@ public final class QueueManager: Sendable {
     @discardableResult
     public func setIndex(_ index: Int) -> Bool {
         let count = list.read { $0.count }
-        guard index >= 0 && index < count else { return false }
+        guard index >= 0, index < count else { return false }
         currentIndex.write { $0 = index }
         return true
     }

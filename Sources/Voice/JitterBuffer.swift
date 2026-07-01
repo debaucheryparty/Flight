@@ -101,6 +101,6 @@ actor JitterBuffer {
     }
 
     private func diff(seq1: UInt16, seq2: UInt16) -> Int16 {
-        return Int16(bitPattern: seq1 &- seq2)
+        Int16(bitPattern: seq1 &- seq2)
     }
 }

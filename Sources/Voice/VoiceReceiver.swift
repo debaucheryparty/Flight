@@ -45,7 +45,7 @@ final class VoiceReceiver: @unchecked Sendable {
                 )
 
                 var mediaPayload = decryptedTransportPayload
-                if let daveSessionManager = daveSessionManager {
+                if let daveSessionManager {
                     if let e2eDecrypted = try await daveSessionManager.decrypt(
                         userId: userId,
                         data: Data(decryptedTransportPayload)
@@ -70,7 +70,7 @@ final class VoiceReceiver: @unchecked Sendable {
     }
 
     private func getOrCreateDecoder(for ssrc: UInt32) throws -> OpusDecoder {
-        return try decoders.write { dict in
+        try decoders.write { dict in
             if let existing = dict[ssrc] {
                 return existing
             }
@@ -81,20 +81,20 @@ final class VoiceReceiver: @unchecked Sendable {
     }
 
     private func getOrCreateJitterBuffer(for ssrc: UInt32, userId: String) throws -> JitterBuffer {
-        return try jitterBuffers.write { dict in
+        try jitterBuffers.write { dict in
             if let existing = dict[ssrc] {
                 return existing
             }
             let buffer = JitterBuffer(ssrc: ssrc, logger: logger)
             Task {
                 await buffer.setOnFrameReady { [weak self] payload in
-                    guard let self = self else { return }
+                    guard let self else { return }
                     do {
-                        let decoder = try self.getOrCreateDecoder(for: ssrc)
+                        let decoder = try getOrCreateDecoder(for: ssrc)
                         let pcm = try decoder.decode(opusData: payload)
-                        self.onAudioReceived?(userId, pcm)
+                        onAudioReceived?(userId, pcm)
                     } catch {
-                        self.logger.warning("Failed to decode frame from jitter buffer for SSRC \(ssrc): \(error)")
+                        logger.warning("Failed to decode frame from jitter buffer for SSRC \(ssrc): \(error)")
                     }
                 }
             }

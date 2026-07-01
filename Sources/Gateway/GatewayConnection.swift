@@ -36,7 +36,7 @@ class GatewayConnection: @unchecked Sendable {
         try await client.connect()
     }
 
-    func send<T: Codable & Sendable>(op: GatewayOpcode, data: T) async throws {
+    func send(op: GatewayOpcode, data: some Codable & Sendable) async throws {
         guard let client = clientLock.read({ $0 }) else {
             throw VoiceError.webSocketClosed(1006, "Connection not established")
         }

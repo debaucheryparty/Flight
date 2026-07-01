@@ -7,7 +7,7 @@ final class ReconnectManager: Sendable {
 
     private struct ReconnectState {
         var attempts = 0
-        var stableTimerTask: Task<Void, Never>? = nil
+        var stableTimerTask: Task<Void, Never>?
     }
 
     init(config: FlightConfiguration, logger: Logger) {
