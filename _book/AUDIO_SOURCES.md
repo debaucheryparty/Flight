@@ -1,8 +1,8 @@
-# audio sources 🎶
+# Audio Sources
 
 flight uses an abstraction called `AudioSource`. basically anything that can spit out a 20ms frame of audio can be played. we have a bunch built-in for you so you dont have to reinvent the wheel.
 
-### 1. ffmpeg source (the heavy lifter)
+### 1. Ffmpeg Source (The Heavy Lifter)
 
 this is what you will use 99% of the time. it pipelines `yt-dlp` straight into `ffmpeg` so you can play literally anything. local files, youtube links, soundcloud, raw urls, whatever.
 
@@ -22,7 +22,7 @@ player.play(track)
 ```
 *pro tip: the ffmpeg source handles all the cleanup automatically. no zombie processes left behind.*
 
-### 2. audio mixer (play multiple things at once)
+### 2. Audio Mixer (Play Multiple Things At Once)
 
 want background music while playing sound effects over it? use the mixer. it reads from multiple sources concurrently and mixes their pcm data perfectly so it doesn't clip or blow out your ears.
 
@@ -43,7 +43,7 @@ player.play(Track(source: .pcm(mixer), metadata: TrackMetadata(title: "chaos")))
 mixer.removeSource(id: sfxId)
 ```
 
-### 3. direct opus source (for pre-encoded stuff)
+### 3. Direct Opus Source (For Pre-Encoded Stuff)
 
 if you already have raw `.dca` files (discord audio format) or pre-encoded opus packets, you skip the cpu-heavy encoding step completely.
 
@@ -55,7 +55,7 @@ let opusSource = OpusSource(packets: parsedOpus)
 player.play(Track(source: .opus(opusSource), metadata: TrackMetadata(title: "fast boy")))
 ```
 
-### 4. writing your own source
+### 4. Writing Your Own Source
 
 if you want to generate sine waves or pull audio from a weird api, just conform to `AudioSource`.
 

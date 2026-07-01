@@ -1,8 +1,8 @@
-# Installation 📦
+# Installation
 
 getting flight into your project is super easy. we use swift package manager (spm) so there's no messy config.
 
-### step 1: add the dependency
+### Step 1: Add The Dependency
 
 pop open your `Package.swift` and drop this in your dependencies array:
 
@@ -13,7 +13,7 @@ dependencies: [
 ]
 ```
 
-### step 2: link the target
+### Step 2: Link The Target
 
 don't forget to link the `Flight` library to your actual executable target so you can import it:
 
@@ -30,7 +30,7 @@ don't forget to link the `Flight` library to your actual executable target so yo
 )
 ```
 
-### step 3: build it
+### Step 3: Build It
 
 run `swift build` and grab a coffee. it'll pull down the discord encryption stuff and nio dependencies automatically.
 

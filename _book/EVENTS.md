@@ -1,10 +1,10 @@
-# events and listening 📡
+# Events And Listening
 
 a voice bot isn't just about throwing audio into the void. sometimes you want to know who is in the channel, when they leave, or even listen to what they are saying. 
 
 flight exposes a clean event system right on the `VoiceClient`.
 
-### the callback hooks
+### The Callback Hooks
 
 ```swift
 import Flight
@@ -35,7 +35,7 @@ client.onStateChange = { state in
 }
 ```
 
-### listening to incoming audio (receiving)
+### Listening To Incoming Audio (Receiving)
 
 flight isn't just a sender. it has a fully featured receiver with a jitter buffer and opus decoders built in. it automatically decrypts DAVE E2EE audio streams and gives you clean PCM data per user.
 

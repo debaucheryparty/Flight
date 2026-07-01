@@ -1,8 +1,8 @@
-# advanced stuff 🧠
+# Advanced Stuff
 
 you probably don't need to read this unless you're a giant nerd trying to dig into the internals. but if you are, here's how the magic works.
 
-### DAVE (end-to-end encryption)
+### Dave (End-To-End Encryption)
 
 discord recently rolled out DAVE, which is their custom implementation of MLS (messaging layer security) for voice channels. it means audio is fully end-to-end encrypted and discord's servers can't intercept the actual voice data.
 
@@ -15,7 +15,7 @@ in other libraries, this is a nightmare to set up. in flight, **it is completely
 
 if you just want to know how to turn it on: you don't. it's just on by default if the discord channel supports it.
 
-### the jitter buffer
+### The Jitter Buffer
 
 udp packets arrive out of order, or sometimes they just get lost in the void of the internet. if you just blindly played everything that arrived, the audio would sound like a robot choking.
 
@@ -24,7 +24,7 @@ flight has a built-in `JitterBuffer` for incoming audio.
 - it sorts incoming packets by their sequence number so they play in perfect chronological order.
 - if a packet straight up disappears, the jitter buffer sends an empty payload to the Opus Decoder. the decoder then uses PLC (packet loss concealment) to synthetically guess what the missing audio should have sounded like. it's wild.
 
-### strict timing with `FrameScheduler`
+### Strict Timing With `Framescheduler`
 
 discord expects exactly one packet of audio every 20 milliseconds. if you send them too fast, they buffer and drop them. if you send them too slow, the audio stutters.
 

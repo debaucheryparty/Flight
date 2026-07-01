@@ -1,8 +1,8 @@
-# tracks and metadata 🎵
+# Tracks And Metadata
 
 like songbird, flight doesn't just treat audio as raw bytes. everything you play is wrapped in a `Track`. this lets you attach metadata, track state, and manage your queues intelligently.
 
-### building a track
+### Building A Track
 
 when you create a track, you pass it an `AudioSource` (like ffmpeg) and some `TrackMetadata`.
 
@@ -19,7 +19,7 @@ let meta = TrackMetadata(
 let track = Track(source: source, metadata: meta)
 ```
 
-### checking what's currently playing
+### Checking What'S Currently Playing
 
 because we attached metadata, your discord commands (like `!nowplaying`) can instantly tell the user what is currently bumping.
 
@@ -32,7 +32,7 @@ if let current = player.currentTrack {
 }
 ```
 
-### global player events
+### Global Player Events
 
 flight gives you a global async stream for all player events. this is how you build a robust music bot that automatically sends "now playing" messages to the discord text channel.
 
@@ -42,7 +42,7 @@ Task {
         switch event {
         case .trackStarted(let track):
             // song just started! send a message to discord
-            await sendDiscordMessage("▶️ now playing: \(track.metadata.title)")
+            await sendDiscordMessage(" now playing: \(track.metadata.title)")
             
         case .trackFinished(let track, let reason):
             // song ended. why did it end?
@@ -62,7 +62,7 @@ Task {
 }
 ```
 
-### queue management
+### Queue Management
 
 the `QueueManager` uses tracks to build a continuous playlist. you can query it at any time to build a `!queue` command.
 

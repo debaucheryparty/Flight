@@ -1,10 +1,10 @@
-# Flight Docs 🚀
+# Flight Docs
 
 Welcome to Flight! A pure Swift, lightweight, and stupidly simple Discord Voice SDK with DAVE (End-to-End Encryption) support out of the box.
 
 We built Flight because the other voice libraries were way too complicated. We just wanted to stream audio to Discord without fighting with C bindings and weird callback hell.
 
-### what's inside this book?
+### What's Inside This Book?
 
 - **[Installation](INSTALLATION.md)**: how to grab the library and toss it in your project
 - **[Discord Bot Integration](DISCORD_BOT_INTEGRATION.md)**: how to wire it up to a bot framework like DiscordBM

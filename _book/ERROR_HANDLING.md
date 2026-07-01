@@ -1,8 +1,8 @@
-# error handling 🚨
+# Error Handling
 
 things go wrong. maybe ffmpeg isn't installed. maybe your bot token expired. flight tries to throw highly descriptive errors so you never have to scratch your head.
 
-### the dreaded `onError` hook
+### The Dreaded `Onerror` Hook
 
 if something unrecoverable happens inside the `VoiceClient` loop (like the DAVE e2ee handshake completely failing, or discord refusing to authorize your token), flight emits an error through the `onError` hook.
 
@@ -21,7 +21,7 @@ client.onError = { error in
 }
 ```
 
-### catching initialization errors
+### Catching Initialization Errors
 
 most errors happen right when you try to start something. flight throws synchronously here so you can catch them immediately.
 
@@ -43,7 +43,7 @@ do {
 }
 ```
 
-### debugging
+### Debugging
 
 flight uses `swift-log`. if you are trying to figure out why your connection is stuck or why packets are dropping, turn your log level up to `.debug` or `.trace`.
 

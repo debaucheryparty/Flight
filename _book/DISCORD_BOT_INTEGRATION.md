@@ -1,10 +1,10 @@
-# discord bot integration 🤖
+# Discord Bot Integration
 
 flight doesn't care how you get your discord gateway events. it is completely agnostic. as long as you can hand it the `token`, `endpoint`, and `session_id`, it will connect. 
 
 but to give you a real world example, here's how you hook it up using the super popular `DiscordBM` library.
 
-### the basic flow
+### The Basic Flow
 
 when a user types `!play`, your bot needs to do two things:
 1. tell discord "hey, put me in this voice channel".
@@ -55,7 +55,7 @@ func handleVoiceServerUpdate(_ server: Gateway.VoiceServerUpdate) {
 }
 ```
 
-### switching channels seamlessly
+### Switching Channels Seamlessly
 
 if the bot is moved to a different voice channel or discord changes the voice server region, discord sends you another `VOICE_SERVER_UPDATE`.
 

@@ -1,8 +1,8 @@
-# Usage & Examples 🎧
+# Usage & Examples
 
 using flight is designed to be dead simple. no boilerplate, no messy state management. just connect and throw audio at it.
 
-### connecting to a voice channel
+### Connecting To A Voice Channel
 
 when discord tells your bot that it joined a voice channel, it sends you a token, an endpoint, and a session id. you just hand those over to flight and it does the rest.
 
@@ -30,7 +30,7 @@ try await client.connect(
 )
 ```
 
-### playing audio
+### Playing Audio
 
 flight has a built in `AudioPlayer` that handles all the Opus encoding and 20ms frame timing for you. if you want to stream from youtube or a local file, just use the `FFmpegSource`.
 
@@ -48,7 +48,7 @@ let track = Track(source: source, metadata: TrackMetadata(title: "rickroll"))
 player.play(track)
 ```
 
-### controlling playback
+### Controlling Playback
 
 the `AudioPlayer` gives you full control. pause, resume, volume, you name it.
 
@@ -66,7 +66,7 @@ player.setVolume(0.5)
 player.stop()
 ```
 
-### queueing multiple songs
+### Queueing Multiple Songs
 
 wanna play a whole playlist? use the `QueueManager`.
 
@@ -85,7 +85,7 @@ player.play(queue: queue)
 player.skip()
 ```
 
-### disconnecting
+### Disconnecting
 
 when the party is over, just tell the client to pack up and leave cleanly.
 

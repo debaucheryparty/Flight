@@ -1,10 +1,10 @@
-# connection lifecycle 🔌
+# Connection Lifecycle
 
 just like songbird has a robust driver state machine, flight meticulously tracks the state of your voice connection. the internet is messy. websockets drop, udp packets get lost, and discord servers sometimes just kick you out for no reason. 
 
 flight handles this gracefully.
 
-### the state machine
+### The State Machine
 
 at any given time, your `VoiceClient` is in one of these states:
 
@@ -14,7 +14,7 @@ at any given time, your `VoiceClient` is in one of these states:
 4. `.ready`: connection is rock solid. DAVE e2ee is initialized. you are clear to blast audio.
 5. `.reconnecting`: something broke (like a network drop or discord restart). flight is aggressively trying to get you back online without you having to lift a finger.
 
-### handling disconnects and drops
+### Handling Disconnects And Drops
 
 you don't have to write custom logic to reconnect if the connection drops. flight's `VoiceGateway` automatically implements an exponential backoff reconnect loop.
 
@@ -39,7 +39,7 @@ client.onStateChange = { state in
 }
 ```
 
-### clean shutdowns
+### Clean Shutdowns
 
 when you are done, you should always cleanly disconnect. this sends a polite `GatewayClose` frame to discord and tears down the udp sockets so you don't leak memory.
 
