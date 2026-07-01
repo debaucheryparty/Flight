@@ -18,8 +18,8 @@ let package = Package(
                 .product(name: "Flight", package: "Flight"),
             ],
             swiftSettings: [
-                .interoperabilityMode(.Cxx)
-            ]
+                .interoperabilityMode(.Cxx),
+            ],
         ),
-    ]
+    ],
 )

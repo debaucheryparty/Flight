@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "SoundboardBot",
     platforms: [
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     dependencies: [
         .package(url: "https://github.com/DiscordBM/DiscordBM", from: "1.16.0"),
@@ -18,8 +18,8 @@ let package = Package(
                 .product(name: "Flight", package: "Flight"),
             ],
             swiftSettings: [
-                .interoperabilityMode(.Cxx)
-            ]
+                .interoperabilityMode(.Cxx),
+            ],
         ),
-    ]
+    ],
 )
