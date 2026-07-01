@@ -59,7 +59,7 @@ final class VoiceReceiver: @unchecked Sendable {
 
                 guard !mediaPayload.isEmpty else { return }
 
-                let jitterBuffer = try getOrCreateJitterBuffer(for: parsed.ssrc, userId: userId)
+                let jitterBuffer = getOrCreateJitterBuffer(for: parsed.ssrc, userId: userId)
                 await jitterBuffer.push(sequence: parsed.sequence, timestamp: parsed.timestamp, payload: mediaPayload)
 
             } catch {
@@ -80,13 +80,13 @@ final class VoiceReceiver: @unchecked Sendable {
         }
     }
 
-    private func getOrCreateJitterBuffer(for ssrc: UInt32, userId: String) throws -> JitterBuffer {
-        try jitterBuffers.write { dict in
+    private func getOrCreateJitterBuffer(for ssrc: UInt32, userId: String) -> JitterBuffer {
+        jitterBuffers.write { dict in
             if let existing = dict[ssrc] {
                 return existing
             }
             let buffer = JitterBuffer(ssrc: ssrc, logger: logger)
-            Task {
+            Task { [self] in
                 await buffer.setOnFrameReady { [weak self] payload in
                     guard let self else { return }
                     do {
