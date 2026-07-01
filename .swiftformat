@@ -1,0 +1,12 @@
+--indent 4
+--allman false
+--wraparguments before-first
+--wrapcollections before-first
+--trimwhitespace always
+--semicolons inline
+--redundanttype inferred
+--self remove
+--importgrouping testable-last
+--trailingclosures
+--voidtype void
+--emptybraces no-space

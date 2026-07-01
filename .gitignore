@@ -1,0 +1,56 @@
+# Xcode
+*.xcworkspace
+*.xcuserdata
+*.xccheckout
+*.xcscmblueprint
+*.xcodeproj/project.xcworkspace
+*.idea/
+
+# Swift Package Manager
+.build/
+/Packages/
+.swiftpm/
+Package.resolved
+
+# Build products
+DerivedData/
+build/
+*.o
+*.obj
+*.swiftmodule
+*.swiftdoc
+*.dSYM
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Temporary files
+*.tmp
+*.temp
+*~
+*.swp
+.DS_Store
+
+# Secrets and credentials
+.env
+.env.*
+
+# Misc
+.swift-version
+.idea/
+.vscode/
+
+# Generated docs
+docs/build/
+
+# Ignore local validate app
+FlightValidate/
