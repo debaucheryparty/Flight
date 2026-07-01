@@ -1,9 +1,9 @@
 # Flight
 
-> Async, pure Swift Discord voice library
+> Standalone, pure Swift Discord voice library
 
 <p align="center">
-    <img src="resources/flight.png" alt="Flight Logo" width="250"> 
+    <img src="resources/Flight.png" alt="Flight Logo" width="250"> 
 </p>
 
 > The smoothest way to fly audio into Discord
@@ -42,7 +42,7 @@
 
 ## Documentation
 
-- Comprehensive, human-friendly documentation is available in the [`Book`](Book/) directory. Check out the [Installation Guide](Book/INSTALLATION.md) to get started!
+- Comprehensive documentation is available in the [`Book`](Book/) directory. Check out the [Installation Guide](Book/INSTALLATION.md) to get started!
 
 ## Installation
 
@@ -64,8 +64,4 @@ dependencies: [
   - System Dependencies: `ffmpeg`, `yt-dlp`
 - This should enable you to fork, compile, and test the project before opening a PR.
 
-If you need help or ask for help or something, feel free to open a Discussion on GitHub or reach out to the maintainers!
-
-### Made with ❤ by @debaucheryparty
-
-> The Debauchery Party
+If you need help or ask for help, feel free to open a Discussion on GitHub or reach out to the maintainers!
