@@ -36,7 +36,7 @@ class Decryptor {
                     data.count,
                     decryptedData.baseAddress!,
                     decryptedData.count,
-                    &outputLength
+                    &outputLength,
                 )
             }
         }

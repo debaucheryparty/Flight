@@ -27,7 +27,7 @@ class Encryptor {
     func encrypt(
         ssrc: UInt32,
         data: Data,
-        mediaType: MediaType = .audio
+        mediaType: MediaType = .audio,
     ) throws(EncryptError) -> Data {
         let maxOutputLength = daveEncryptorGetMaxCiphertextByteSize(encryptorHandle, mediaType, data.count)
         var encryptedData = Data(count: maxOutputLength)
@@ -46,7 +46,7 @@ class Encryptor {
                     data.count,
                     encryptedData.baseAddress!,
                     encryptedData.count,
-                    &outputLength
+                    &outputLength,
                 )
             }
         }

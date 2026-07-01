@@ -13,7 +13,7 @@ struct GatewaySession: Codable {
             userId: userId,
             sessionId: sessionId,
             token: token,
-            endpoint: endpoint
+            endpoint: endpoint,
         )
     }
 }

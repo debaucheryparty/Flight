@@ -14,7 +14,7 @@ public final class OpusDecoder: @unchecked Sendable {
         guard let dec = opus_decoder_create(
             Int32(sampleRate),
             Int32(channels),
-            &error
+            &error,
         ), error == OPUS_OK else {
             throw VoiceError.opusError(error, "Failed to initialize Opus decoder")
         }
@@ -35,7 +35,7 @@ public final class OpusDecoder: @unchecked Sendable {
                 0,
                 &pcmOut,
                 Int32(frameSize),
-                isFEC ? 1 : 0
+                isFEC ? 1 : 0,
             )
         } else {
             opus_decode(
@@ -44,7 +44,7 @@ public final class OpusDecoder: @unchecked Sendable {
                 Int32(opusData.count),
                 &pcmOut,
                 Int32(frameSize),
-                isFEC ? 1 : 0
+                isFEC ? 1 : 0,
             )
         }
 

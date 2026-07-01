@@ -38,7 +38,7 @@ final class VoiceTransporter: @unchecked Sendable {
         _ opusPayload: [UInt8],
         encryption: VoiceEncryption,
         udp: UDPConnection,
-        daveSessionManager: DaveSessionManager? = nil
+        daveSessionManager: DaveSessionManager? = nil,
     ) async throws {
         if !isSpeakingActive.read({ $0 }) {
             try await startSpeaking()
@@ -69,7 +69,7 @@ final class VoiceTransporter: @unchecked Sendable {
             do {
                 let encryptedData = try await daveSessionManager.encrypt(
                     ssrc: ssrc,
-                    data: Data(opusPayload)
+                    data: Data(opusPayload),
                 )
                 mediaPayload = Array(encryptedData)
             } catch {
@@ -82,7 +82,7 @@ final class VoiceTransporter: @unchecked Sendable {
         let encryptedPayload = try encryption.encrypt(
             payload: mediaPayload,
             rtpHeader: rtpHeader,
-            nonceCounter: nonce
+            nonceCounter: nonce,
         )
 
         let rtpPacket = RTPPacket.makePacket(header: rtpHeader, encryptedPayload: encryptedPayload)

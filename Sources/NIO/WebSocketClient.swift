@@ -26,7 +26,7 @@ final class WebSocketClient: @unchecked Sendable {
         port: Int = 443,
         path: String,
         logger: Logger,
-        onEvent: @escaping @Sendable (Event) -> Void
+        onEvent: @escaping @Sendable (Event) -> Void,
     ) {
         self.host = host
         self.port = port
@@ -57,7 +57,7 @@ final class WebSocketClient: @unchecked Sendable {
                     let upgrader = NIOWebSocketClientUpgrader(
                         requestKey: secWebSocketKey,
                         maxFrameSize: 1 << 16,
-                        automaticErrorHandling: true
+                        automaticErrorHandling: true,
                     ) { channel, _ in
                         let frameHandler = WebSocketFrameHandler(onEvent: self.onEvent, logger: self.logger, client: self)
                         return channel.pipeline.addHandler(frameHandler).map {
@@ -67,12 +67,12 @@ final class WebSocketClient: @unchecked Sendable {
 
                     let config = NIOHTTPClientUpgradeConfiguration(
                         upgraders: [upgrader],
-                        completionHandler: { _ in }
+                        completionHandler: { _ in },
                     )
 
                     try channel.pipeline.syncOperations.addHTTPClientHandlers(
                         leftOverBytesStrategy: .forwardBytes,
-                        withClientUpgrade: config
+                        withClientUpgrade: config,
                     )
                 }
             }
@@ -85,7 +85,7 @@ final class WebSocketClient: @unchecked Sendable {
         var requestHead = HTTPRequestHead(
             version: .http1_1,
             method: .GET,
-            uri: path
+            uri: path,
         )
         requestHead.headers.add(name: "Host", value: host)
         requestHead.headers.add(name: "User-Agent", value: "DiscordBot (https://github.com/apple/swift-nio, 1.0.0)")

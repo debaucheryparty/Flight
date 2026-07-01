@@ -13,7 +13,7 @@ public struct FlightConfiguration: Sendable {
         maxReconnectDelay: Double = VoiceConstants.defaultMaxReconnectDelay,
         reconnectJitter: Double = VoiceConstants.defaultReconnectJitter,
         gatewayVersion: Int = 8,
-        connectionTimeout: TimeAmount = .seconds(10)
+        connectionTimeout: TimeAmount = .seconds(10),
     ) {
         self.baseReconnectDelay = baseReconnectDelay
         self.maxReconnectDelay = maxReconnectDelay

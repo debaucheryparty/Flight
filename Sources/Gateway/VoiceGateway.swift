@@ -35,7 +35,7 @@ public final class VoiceGateway: @unchecked Sendable {
 
     init(
         config: FlightConfiguration = FlightConfiguration(),
-        logger: Logger = Logger(label: "Flight.VoiceGateway")
+        logger: Logger = Logger(label: "Flight.VoiceGateway"),
     ) {
         self.config = config
         self.logger = logger
@@ -226,7 +226,7 @@ public final class VoiceGateway: @unchecked Sendable {
             let daveManager = DaveSessionManager(
                 selfUserId: session.userId,
                 groupId: UInt64(session.serverId) ?? 0,
-                delegate: self
+                delegate: self,
             )
             daveSessionManagerLock.write { $0 = daveManager }
 
@@ -258,7 +258,7 @@ public final class VoiceGateway: @unchecked Sendable {
                         protocolName: "udp",
                         address: externalIP,
                         port: externalPort,
-                        mode: selectedMode.rawValue
+                        mode: selectedMode.rawValue,
                     )
 
                     guard let conn = connectionLock.read({ $0 }) else {
@@ -389,7 +389,7 @@ public final class VoiceGateway: @unchecked Sendable {
                 if let daveSessionManager = daveSessionManagerLock.read({ $0 }) {
                     await daveSessionManager.prepareTransition(
                         transitionId: UInt16(payload.transitionId),
-                        protocolVersion: UInt16(payload.protocolVersion)
+                        protocolVersion: UInt16(payload.protocolVersion),
                     )
                 }
             }
@@ -465,7 +465,7 @@ public final class VoiceGateway: @unchecked Sendable {
             onTimeout: { [weak self] in
                 self?.handleHeartbeatTimeout()
             },
-            logger: logger
+            logger: logger,
         )
 
         heartbeatLock.write { $0 = hb }
@@ -496,7 +496,7 @@ public final class VoiceGateway: @unchecked Sendable {
             serverId: session.serverId,
             userId: session.userId,
             sessionId: session.sessionId,
-            token: session.token
+            token: session.token,
         )
 
         logger.debug("Sending Identify payload")
@@ -510,7 +510,7 @@ public final class VoiceGateway: @unchecked Sendable {
         let payload = ResumePayload(
             serverId: session.serverId,
             sessionId: session.sessionId,
-            token: session.token
+            token: session.token,
         )
 
         logger.debug("Sending Resume payload")

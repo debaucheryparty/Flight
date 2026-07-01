@@ -26,7 +26,7 @@ public actor DaveSessionManager {
     public init(
         selfUserId: String,
         groupId: UInt64,
-        delegate: DaveSessionDelegate
+        delegate: DaveSessionDelegate,
     ) {
         self.selfUserId = selfUserId
         self.groupId = groupId
@@ -57,7 +57,7 @@ public actor DaveSessionManager {
     public func encrypt(
         ssrc: UInt32,
         data: Data,
-        mediaType: MediaType = .audio
+        mediaType: MediaType = .audio,
     ) throws(EncryptError) -> Data {
         // register the ssrc dynamically with the right codec before encrypting first packet
         if !assignedSsrcs.contains(ssrc) {
@@ -71,7 +71,7 @@ public actor DaveSessionManager {
     public func decrypt(
         userId: String,
         data: Data,
-        mediaType: MediaType = .audio
+        mediaType: MediaType = .audio,
     ) throws(DecryptError) -> Data? {
         guard let decryptor = decryptors[userId] else {
             return nil
@@ -84,12 +84,12 @@ public actor DaveSessionManager {
         if protocolVersion > Self.DISABLED_PROTOCOL_VERSION {
             await prepareEpoch(
                 epoch: Self.MLS_NEW_GROUP_EXPECTED_EPOCH,
-                protocolVersion: protocolVersion
+                protocolVersion: protocolVersion,
             )
         } else {
             await prepareTransition(
                 transitionId: Self.INIT_TRANSITION_ID,
-                protocolVersion: protocolVersion
+                protocolVersion: protocolVersion,
             )
             executeTransition(transitionId: Self.INIT_TRANSITION_ID)
         }
@@ -165,7 +165,7 @@ public actor DaveSessionManager {
     public func mlsWelcome(transitionId: UInt16, welcome: Data) async {
         let welcome = session.processWelcome(
             welcome: welcome,
-            knownUserIds: knownUserIds
+            knownUserIds: knownUserIds,
         )
         guard welcome != nil else {
             await delegate?.mlsInvalidCommitWelcome(transitionId: transitionId)
@@ -175,7 +175,7 @@ public actor DaveSessionManager {
 
         await prepareTransition(
             transitionId: transitionId,
-            protocolVersion: session.getProtocolVersion()
+            protocolVersion: session.getProtocolVersion(),
         )
     }
 
