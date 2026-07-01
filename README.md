@@ -1,19 +1,71 @@
-# Flight Docs
+# Flight
 
-Welcome to Flight! A pure Swift, lightweight, and stupidly simple Discord Voice SDK with DAVE (End-to-End Encryption) support out of the box.
+> Async, pure Swift Discord voice library
 
-We built Flight because the other voice libraries were way too complicated. We just wanted to stream audio to Discord without fighting with C bindings and weird callback hell.
+<p align="center">
+    <img src="resources/flight.png" alt="Flight Logo" width="600"> 
+</p>
 
-### What's Inside This Book?
+> The smoothest way to fly audio into Discord
 
-- **[Installation](Book/INSTALLATION.md)**: how to grab the library and toss it in your project
-- **[Discord Bot Integration](Book/DISCORD_BOT_INTEGRATION.md)**: how to wire it up to a bot framework like DiscordBM
-- **[Usage & Examples](Book/USAGE.md)**: how to connect, play music, stop, and skip songs
-- **[Tracks & Metadata](Book/TRACKS_AND_METADATA.md)**: extracting song info, catching player events, and queue state
-- **[Audio Sources](Book/AUDIO_SOURCES.md)**: streaming from youtube, local files, and mixing multiple audio streams together
-- **[Events & Listening](Book/EVENTS.md)**: detecting when people join/leave, and listening to their incoming voice audio
-- **[Connection Lifecycle](Book/CONNECTION_LIFECYCLE.md)**: the voice state machine and auto-reconnecting on drops
-- **[Error Handling](Book/ERROR_HANDLING.md)**: catching ffmpeg issues and decoding gateway crashes
-- **[Advanced Internals](Book/ADVANCED.md)**: under the hood look at the jitter buffer, continuous clock scheduler, and invisible DAVE E2EE
+## Features
 
-jump into the installation guide and let's get building!
+- Voice Gateway
+  - [x] Seamless Connect / Disconnect
+  - [x] Auto-Reconnecting & Resumes
+  - [x] Invisible DAVE (End-to-End Encryption) Support
+  - [x] Granular State Tracking
+- Playback
+  - [x] Play, Pause, Resume, Stop
+  - [x] Real-time Volume Control
+  - [x] Dynamic `AudioMixer` for playing multiple tracks simultaneously
+  - [x] Track Queueing (`QueueManager`)
+- Audio Pipeline
+  - [x] Opus Encoding / Decoding
+  - [x] Smart Jitter Buffering (Sequence Sorting, PLC triggering)
+  - [x] Strict Continuous Clock Frame Scheduling (20ms)
+- Events
+  - [x] `trackStarted` & `trackFinished`
+  - [x] `onUserConnect` & `onUserDisconnect`
+  - [x] Receive Voice Audio (`onAudioReceived`)
+
+## Sources
+
+- [x] FFmpeg (`FFmpegSource`)
+  - Supports local files, HTTP streams, and everything FFmpeg can parse
+- [x] Youtube / SoundCloud (`FFmpegSource` via `yt-dlp`)
+  - Supported automatically via `ytsearch:` and `scsearch:` queries
+- [x] Raw PCM (`AudioMixer` / Custom Sources)
+  - Full support for writing your own custom `AudioSource` generator
+- [x] DCA / Pre-encoded Opus (`OpusSource`)
+  - Bypasses CPU-heavy encoding entirely for pre-processed `.dca` files
+
+## Documentation
+
+- Comprehensive, human-friendly documentation is available in the [`Book`](Book/) directory. Check out the [Installation Guide](Book/INSTALLATION.md) to get started!
+
+## Installation
+
+- Keep in mind that **Flight is heavily in active development**. For issues, please open an issue in the [Issues Tab](https://github.com/debaucheryparty/Flight/issues).
+- Flight is distributed via the Swift Package Manager. Just drop this in your `Package.swift`:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/debaucheryparty/Flight.git", branch: "main")
+]
+```
+
+- *Note: You must enable C++ Interoperability (`.interoperabilityMode(.Cxx)`) on your target to use Flight's encryption suite smoothly.*
+
+## Contributing
+- The dev environment used in this project is:
+  - macOS / Linux
+  - Swift toolchain: `Swift 6.0+`
+  - System Dependencies: `ffmpeg`, `yt-dlp`
+- This should enable you to fork, compile, and test the project before opening a PR.
+
+If you need help or ask for help or something, feel free to open a Discussion on GitHub or reach out to the maintainers!
+
+### Made with ❤ by @debaucheryparty
+
+> The Debauchery Party

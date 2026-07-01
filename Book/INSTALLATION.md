@@ -9,7 +9,7 @@ pop open your `Package.swift` and drop this in your dependencies array:
 ```swift
 dependencies: [
     // grab the latest version from github
-    .package(url: "https://github.com/debaucheryparty/Flight.git", from: "0.1.0")
+    .package(url: "https://github.com/debaucheryparty/Flight.git", branch: "main")
 ]
 ```
 
