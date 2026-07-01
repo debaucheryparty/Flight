@@ -14,7 +14,7 @@ public final class SharedStreamCache: @unchecked Sendable {
         try? FileManager.default.createDirectory(
             at: cacheDirectory,
             withIntermediateDirectories: true,
-            attributes: nil
+            attributes: nil,
         )
     }
 
@@ -23,7 +23,7 @@ public final class SharedStreamCache: @unchecked Sendable {
         try? FileManager.default.createDirectory(
             at: cacheDirectory,
             withIntermediateDirectories: true,
-            attributes: nil
+            attributes: nil,
         )
         cacheLock.write { $0.removeAll() }
     }

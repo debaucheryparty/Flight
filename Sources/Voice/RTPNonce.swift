@@ -3,7 +3,7 @@ import Foundation
 enum RTPNonce {
     static func makeNonce(
         mode: EncryptionMode,
-        counter: UInt32
+        counter: UInt32,
     ) -> [UInt8] {
         switch mode {
         case .aes256GcmRtpsize:

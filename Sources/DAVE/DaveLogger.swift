@@ -4,7 +4,7 @@ func logSyncCallback(
     severity: DAVELoggingSeverity,
     file: UnsafePointer<CChar>?,
     line: Int32,
-    message: UnsafePointer<CChar>?
+    message: UnsafePointer<CChar>?,
 ) {
     guard let message, let file else { return }
     let logMessage = String(cString: message)

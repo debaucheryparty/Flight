@@ -12,7 +12,7 @@ let package = Package(
     products: [
         .library(
             name: "Flight",
-            targets: ["Flight"]
+            targets: ["Flight"],
         ),
     ],
     dependencies: [
@@ -41,7 +41,7 @@ let package = Package(
             exclude: ["COpus", "CSodium", "CLibdave", "CMLS", "CJson"],
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
-            ]
+            ],
         ),
         .systemLibrary(
             name: "COpus",
@@ -49,7 +49,7 @@ let package = Package(
             providers: [
                 .brew(["opus"]),
                 .apt(["libopus-dev"]),
-            ]
+            ],
         ),
         .systemLibrary(
             name: "CSodium",
@@ -57,7 +57,7 @@ let package = Package(
             providers: [
                 .brew(["libsodium"]),
                 .apt(["libsodium-dev"]),
-            ]
+            ],
         ),
         .systemLibrary(
             name: "COpenSSL",
@@ -65,7 +65,7 @@ let package = Package(
             providers: [
                 .brew(["openssl@3"]),
                 .apt(["libssl-dev"]),
-            ]
+            ],
         ),
         .target(
             name: "CLibdave",
@@ -88,7 +88,7 @@ let package = Package(
             cxxSettings: [
                 .headerSearchPath("libdave/cpp/includes"),
                 .headerSearchPath("libdave/cpp/src"),
-            ]
+            ],
         ),
         .target(
             name: "mlspp",
@@ -99,12 +99,12 @@ let package = Package(
             ],
             path: "Sources/CMLS/mlspp",
             exclude: ["test"],
-            sources: ["src"]
+            sources: ["src"],
         ),
         .target(
             name: "mlspp_namespace",
             path: "Sources/CMLS/namespace",
-            publicHeadersPath: "."
+            publicHeadersPath: ".",
         ),
         .target(
             name: "hpke",
@@ -120,7 +120,7 @@ let package = Package(
             sources: ["src"],
             cxxSettings: [
                 .define("WITH_OPENSSL3"),
-            ]
+            ],
         ),
         .target(
             name: "bytes",
@@ -130,19 +130,19 @@ let package = Package(
             ],
             path: "Sources/CMLS/mlspp/lib/bytes",
             exclude: ["test"],
-            sources: ["src"]
+            sources: ["src"],
         ),
         .target(
             name: "tls_syntax",
             dependencies: [.target(name: "mlspp_namespace")],
             path: "Sources/CMLS/mlspp/lib/tls_syntax",
             exclude: ["test"],
-            sources: ["src"]
+            sources: ["src"],
         ),
         .target(
             name: "CJson",
-            path: "Sources/CJson"
+            path: "Sources/CJson",
         ),
     ],
-    cxxLanguageStandard: .cxx17
+    cxxLanguageStandard: .cxx17,
 )

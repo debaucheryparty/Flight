@@ -10,3 +10,4 @@
 --trailingclosures
 --voidtype void
 --emptybraces no-space
+--swiftversion 6.3

@@ -12,7 +12,7 @@ enum RTPPacket {
     static func makeHeader(
         sequence: UInt16,
         timestamp: UInt32,
-        ssrc: UInt32
+        ssrc: UInt32,
     ) -> [UInt8] {
         var header = [UInt8](repeating: 0, count: 12)
 
@@ -38,7 +38,7 @@ enum RTPPacket {
 
     static func makePacket(
         header: [UInt8],
-        encryptedPayload: [UInt8]
+        encryptedPayload: [UInt8],
     ) -> [UInt8] {
         header + encryptedPayload
     }
@@ -76,7 +76,7 @@ enum RTPPacket {
             sequence: sequence,
             timestamp: timestamp,
             ssrc: ssrc,
-            payload: payload
+            payload: payload,
         )
     }
 }

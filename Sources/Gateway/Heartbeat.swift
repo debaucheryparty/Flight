@@ -18,7 +18,7 @@ final class HeartbeatManager: Sendable {
         intervalMs: Double,
         sendHeartbeat: @escaping @Sendable (Int) -> Void,
         onTimeout: @escaping @Sendable () -> Void,
-        logger: Logger
+        logger: Logger,
     ) {
         self.intervalMs = intervalMs
         self.sendHeartbeat = sendHeartbeat

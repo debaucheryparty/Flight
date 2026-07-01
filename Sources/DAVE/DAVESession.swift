@@ -25,7 +25,7 @@ class DaveSession {
             daveSessionSetExternalSender(
                 self.sessionHandle,
                 externalSenderPackage.baseAddress!,
-                externalSenderPackage.count
+                externalSenderPackage.count,
             )
         }
     }
@@ -40,7 +40,7 @@ class DaveSession {
         daveSessionGetMarshalledKeyPackage(
             sessionHandle,
             &data,
-            &outputLength
+            &outputLength,
         )
 
         guard let data, outputLength > 0 else {
@@ -73,7 +73,7 @@ class DaveSession {
                     knownUserIdsPtr.baseAddress,
                     knownUserIdCount,
                     &welcomeData,
-                    &welcomeDataLength
+                    &welcomeDataLength,
                 )
             }
         }
@@ -100,7 +100,7 @@ class DaveSession {
                     welcomePtr.baseAddress!,
                     welcomeBytes.count,
                     knownUserIdsPtr.baseAddress,
-                    knownUserIdCount
+                    knownUserIdCount,
                 )
             }
         }
@@ -118,7 +118,7 @@ class DaveSession {
             return daveSessionProcessCommit(
                 self.sessionHandle,
                 commit.baseAddress!,
-                commit.count
+                commit.count,
             )
         }
 

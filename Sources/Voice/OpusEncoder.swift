@@ -12,7 +12,7 @@ public final class OpusEncoder: @unchecked Sendable {
             Int32(sampleRate),
             Int32(channels),
             OPUS_APPLICATION_AUDIO,
-            &error
+            &error,
         ) else {
             throw VoiceError.opusError(error, "Failed to create Opus encoder")
         }
@@ -44,7 +44,7 @@ public final class OpusEncoder: @unchecked Sendable {
             pcm,
             Int32(frameSize),
             &outputBuffer,
-            Int32(outputBuffer.count)
+            Int32(outputBuffer.count),
         )
 
         guard bytesEncoded >= 0 else {

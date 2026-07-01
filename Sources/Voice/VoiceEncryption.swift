@@ -17,7 +17,7 @@ struct VoiceEncryption {
     func encrypt(
         payload: [UInt8],
         rtpHeader: [UInt8],
-        nonceCounter: UInt32
+        nonceCounter: UInt32,
     ) throws -> [UInt8] {
         let nonce = RTPNonce.makeNonce(mode: mode, counter: nonceCounter)
 
@@ -36,7 +36,7 @@ struct VoiceEncryption {
                 UInt64(rtpHeader.count),
                 nil,
                 nonce,
-                secretKey
+                secretKey,
             )
 
             guard result == 0 else {
@@ -64,7 +64,7 @@ struct VoiceEncryption {
                 UInt64(rtpHeader.count),
                 nil,
                 nonce,
-                secretKey
+                secretKey,
             )
 
             guard result == 0 else {
@@ -83,7 +83,7 @@ struct VoiceEncryption {
     func decrypt(
         payload: [UInt8],
         rtpHeader: [UInt8],
-        sequence: UInt16
+        sequence: UInt16,
     ) throws -> [UInt8] {
         guard payload.count >= 4 else {
             throw VoiceError.encryptionFailed("Payload too short for nonce extraction")
@@ -127,7 +127,7 @@ struct VoiceEncryption {
                     candidate.aad,
                     UInt64(candidate.aad.count),
                     candidate.nonce,
-                    secretKey
+                    secretKey,
                 )
 
                 if result == 0 {
@@ -158,7 +158,7 @@ struct VoiceEncryption {
                     candidate.aad,
                     UInt64(candidate.aad.count),
                     candidate.nonce,
-                    secretKey
+                    secretKey,
                 )
 
                 if result == 0 {

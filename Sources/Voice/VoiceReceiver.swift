@@ -15,7 +15,7 @@ final class VoiceReceiver: @unchecked Sendable {
         gateway: VoiceGateway,
         encryption: VoiceEncryption,
         daveSessionManager: DaveSessionManager?,
-        logger: Logger = Logger(label: "Flight.VoiceReceiver")
+        logger: Logger = Logger(label: "Flight.VoiceReceiver"),
     ) {
         self.gateway = gateway
         self.encryption = encryption
@@ -41,14 +41,14 @@ final class VoiceReceiver: @unchecked Sendable {
                 let decryptedTransportPayload = try encryption.decrypt(
                     payload: parsed.payload,
                     rtpHeader: parsed.header,
-                    sequence: parsed.sequence
+                    sequence: parsed.sequence,
                 )
 
                 var mediaPayload = decryptedTransportPayload
                 if let daveSessionManager {
                     if let e2eDecrypted = try await daveSessionManager.decrypt(
                         userId: userId,
-                        data: Data(decryptedTransportPayload)
+                        data: Data(decryptedTransportPayload),
                     ) {
                         mediaPayload = Array(e2eDecrypted)
                     } else {

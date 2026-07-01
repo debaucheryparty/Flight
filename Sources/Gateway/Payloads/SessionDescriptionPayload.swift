@@ -20,7 +20,7 @@ struct SessionDescriptionPayload: Codable {
         secretKey: [UInt8],
         audioCodec: String? = nil,
         videoCodec: String? = nil,
-        daveProtocolVersion: Int? = nil
+        daveProtocolVersion: Int? = nil,
     ) {
         self.mode = mode
         self.secretKey = secretKey

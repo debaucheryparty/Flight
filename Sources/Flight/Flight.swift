@@ -49,14 +49,14 @@ public final class VoiceClient: @unchecked Sendable {
         userId: String,
         sessionId: String,
         token: String,
-        endpoint: String
+        endpoint: String,
     ) async throws {
         let session = GatewaySession(
             serverId: serverId,
             userId: userId,
             sessionId: sessionId,
             token: token,
-            endpoint: endpoint
+            endpoint: endpoint,
         )
         try await gateway.connect(session: session)
     }
@@ -89,7 +89,7 @@ public final class VoiceClient: @unchecked Sendable {
             opusData,
             encryption: encryption,
             udp: udp,
-            daveSessionManager: gateway.daveSessionManager
+            daveSessionManager: gateway.daveSessionManager,
         )
     }
 
@@ -131,7 +131,7 @@ public final class VoiceClient: @unchecked Sendable {
             let receiver = VoiceReceiver(
                 gateway: gateway,
                 encryption: encryption,
-                daveSessionManager: gateway.daveSessionManager
+                daveSessionManager: gateway.daveSessionManager,
             )
             receiver.onAudioReceived = { [weak self] userId, pcm in
                 self?.onAudioReceived?(userId, pcm)
