@@ -3,7 +3,7 @@
 > Standalone, pure Swift Discord voice library
 
 <p align="center">
-    <img src="resources/Flight.png" alt="Flight Logo" width="250"> 
+    <img src="resources/flight.png" alt="Flight Logo" width="250"> 
 </p>
 
 > The smoothest way to fly audio into Discord
