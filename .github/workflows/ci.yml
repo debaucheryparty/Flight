@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+
 jobs:
   build-macos:
     name: Build (macOS)
@@ -43,8 +46,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libsodium-dev libopus-dev ffmpeg python3
+          apt-get update
+          apt-get install -y libsodium-dev libopus-dev ffmpeg python3
           
       - name: Build Flight Library
         run: swift build -c release
