@@ -19,8 +19,6 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.65.0"),
         .package(url: "https://github.com/apple/swift-nio-ssl.git", from: "2.26.0"),
         .package(url: "https://github.com/apple/swift-log", from: "1.9.0"),
-        .package(url: "https://github.com/DiscordBM/DiscordBM", exact: "1.16.0"),
-        .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.9.0"),
     ],
     targets: [
         .target(
