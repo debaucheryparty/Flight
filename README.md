@@ -3,7 +3,7 @@
 > Async, pure Swift Discord voice library
 
 <p align="center">
-    <img src="resources/flight.png" alt="Flight Logo" width="600"> 
+    <img src="resources/flight.png" alt="Flight Logo" width="250"> 
 </p>
 
 > The smoothest way to fly audio into Discord
