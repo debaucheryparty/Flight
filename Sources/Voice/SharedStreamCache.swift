@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+    import FoundationNetworking
+#endif
 
 public final class SharedStreamCache: @unchecked Sendable {
     public static let shared = SharedStreamCache()
